@@ -81,6 +81,41 @@ obj = obj.offsetParent;
 }
 return {"top":top,"left":left,"width":width,"height":height};
 }
+
+
+function foo(arr) {
+    var a = [], b = [], prev;
+    
+    arr.sort();
+    for ( var i = 0; i < arr.length; i++ ) {
+        if ( arr[i] !== prev ) {
+            a.push(arr[i]);
+            b.push(1);
+        } else {
+            b[b.length-1]++;
+        }
+        prev = arr[i];
+    }
+    
+    return [a, b];
+}
+
+function combine(result_o) {
+    var a = result_o[0], b = result_o[1], c =[];
+    if(a.length  == b.length) {
+    for ( var i = 0; i < a.length; i++ ) {
+        c.push([a[i], b[i]]);
+    }
+    return '[' + c + ']'
+    }
+    else {
+
+    return '[' + a + '] [' + b + ']';
+    }
+    
+}
+
+
 function query(){
 var str = document.getElementById("txtChinese").value.trim();
 if(str == "") return;
@@ -88,7 +123,16 @@ var arrRslt = makePy(str);
 var div = document.getElementById("divResult");
 //div.style.position = "absolute";
 //div.style.display = "block" ;
-div.innerHTML = arrRslt.join("</div><div>&nbsp;");
+
+var result1 = arrRslt.toString();
+var result2 = result1.split("");
+var result = foo(result2);
+var result_f = combine (result)
+div.innerHTML = result_f
+//div.innerHTML = arrRslt.join("</div><div>&nbsp;");
+//div.innerHTML = result2.join(" ");
+//div.innerHTML = '[' + result[0] + '] [' + result[1] + ']';
+
 // var oDiv = getPosition(document.getElementById("txtChinese"));
 // div.style.top = oDiv.top + oDiv.height;
 // div.style.left = oDiv.left ;
